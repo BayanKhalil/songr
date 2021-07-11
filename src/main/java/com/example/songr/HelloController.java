@@ -24,6 +24,10 @@ public class HelloController {
         model.addAttribute("word", word.toUpperCase());
         return "capitalize";
     }
+    @GetMapping("/")
+    public String splashPage() {
+        return "splash";
+    }
 
     @GetMapping("/albums")
     public String albums(Model model) {
