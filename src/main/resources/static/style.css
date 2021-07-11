@@ -1,0 +1,21 @@
+
+
+h1 {
+    margin-top:10%;
+    text-align: center;
+    color: red
+}
+
+p{
+margin-top:30%;
+    text-align: center;
+color:blue
+
+}
+.container {
+  display: flex;
+   flex-wrap:revert
+}
+.image{
+width:50%;
+}
