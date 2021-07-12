@@ -16,5 +16,25 @@
          <img class="image" th:src=@{${allAlbums.imageUrl}}>
      </ul>
  </div>
+ <form action="/new" method="POST">
+     <label for="title">Title</label>
+     <input type="text" name="title" id="title">
+
+     <label for="artist">Artist</label>
+     <input type="text" name="artist" id="artist">
+
+     <label for="songCount">Song Count</label>
+     <input type="text" name="songCount" id="songCount">
+
+     <label for="length">Length</label>
+     <input type="text" name="length" id="length">
+
+     <label for="imageUrl">ImageUrl</label>
+     <input type="text" name="imageUrl" id="imageUrl">
+
+     <button type="submit">Add Album </button>
+ </form>
+
+
 </body>
 </html>

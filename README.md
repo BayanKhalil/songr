@@ -11,10 +11,13 @@
 `localhost:8080/capitalize/any word`
  4. albums rout
 `localhost:8080/albums`
+ 5. albums rout
+`localhost:8080/new`
 
 ## Run this application
 1. clone this repo into your local machine
 2.Go to localhost:8080/>> welcome page
 3. Go to localhost:8080/hello
 4. Go to localhost:8080/capitalize/any word to see the word converted to capital
-5. Go to localhost:8080/albums it has three listed albums
+5. Go to localhost:8080/albums it has three listed albums and form to add new album
+5. Go to localhost:8080/new it you can see the album that you added

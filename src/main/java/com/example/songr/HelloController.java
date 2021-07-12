@@ -1,17 +1,19 @@
 package com.example.songr;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class HelloController {
+    @Autowired
+    private AlbumRepository albumRepository;
 
     @GetMapping("/hello")
     public String helloWorld() {
@@ -38,7 +40,32 @@ public class HelloController {
         allAlbums.add(firstOne);
         allAlbums.add(secondOne);
         allAlbums.add(thirdOne);
+        List<Album> allAlbums2 = albumRepository.findAll();
         model.addAttribute("allAlbums", allAlbums);
         return "albums";
     }
+
+//    >>>>>>>>>lab12>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+    @PostMapping("/new")
+    public RedirectView addAlbums(String title, String artist, double songCount, double length, String imageUrl) {
+        Album album = new Album(title, artist, songCount, length, imageUrl);
+        albumRepository.save(album);
+
+        return new RedirectView("/new");
+    }
+
+    @GetMapping("/new")
+    public String getAlbums(Model model) {
+        List<Album> allAlbums = albumRepository.findAll();
+        model.addAttribute("allAlbums", allAlbums);
+        return "new";
+    }
+
+
+
+
+
 }
