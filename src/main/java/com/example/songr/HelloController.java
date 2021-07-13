@@ -40,7 +40,7 @@ public class HelloController {
         allAlbums.add(firstOne);
         allAlbums.add(secondOne);
         allAlbums.add(thirdOne);
-        List<Album> allAlbums2 = albumRepository.findAll();
+//        List<Album> allAlbums2 = albumRepository.findAll();
         model.addAttribute("allAlbums", allAlbums);
         return "albums";
     }
@@ -49,8 +49,12 @@ public class HelloController {
 
 
 
+
     @PostMapping("/new")
-    public RedirectView addAlbums(String title, String artist, double songCount, double length, String imageUrl) {
+    public RedirectView addAlbums(@RequestParam (value = "title" ,required = false, defaultValue = "title")String title,@RequestParam(value="artist") String artist,
+                                  @RequestParam(value="songCount") double songCount,
+                                  @RequestParam(value="length") double length,
+                                  @RequestParam(value="imageUrl") String imageUrl,Model model) {
         Album album = new Album(title, artist, songCount, length, imageUrl);
         albumRepository.save(album);
 
@@ -59,7 +63,7 @@ public class HelloController {
 
     @GetMapping("/new")
     public String getAlbums(Model model) {
-        List<Album> allAlbums = albumRepository.findAll();
+        List<Album> allAlbums =albumRepository.findAll();
         model.addAttribute("allAlbums", allAlbums);
         return "new";
     }
