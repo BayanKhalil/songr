@@ -6,14 +6,22 @@
 </head>
 <body>
 <h1>New</h1>
-<!-- <p th:text="'id: ' + ${allAlbums.id}"></p>-->
-<!--<p th:each="allAlbums : ${allAlbums}"></p>-->
-<p th:text="${allAlbums.title}"></p>
-<p th:text=" ${allAlbums.artist}"></p>
-<p th:text=" ${allAlbums.songCount}"></p>
-<p th:text=" ${allAlbums.length}"></p>
-<p th:text=" ${allAlbums.imageUrl}"></p>
-<a href="/albums">Submit another message</a>
+<ul th:each="allAlbums : ${allAlbums}">
+    <li th:text="${allAlbums.id}"></li>
+    <li th:text="${allAlbums.title}"></li>
+    <li th:text="${allAlbums.artist}"></li>
+    <li th:text="${allAlbums.songCount}"></li>
+    <li th:text="${allAlbums.length}"></li>
+    <a th:href = "@{'/albums/' + ${allAlbums.id}}"><img th:src="${allAlbums.imageUrl}" class="image"></a>
+</ul>
+
+<form action="albums/{id}" method="POST">
+    <input type="hidden" name="id" >
+    <input type="text" name="title" placeholder="Title">
+    <input type="number" name="length"placeholder="Song Length">
+    <input type="number" name="trackNumber"placeholder="Track Number">
+    <input type="submit" value="Add Song">
+</form>
 
 </body>
 </html>

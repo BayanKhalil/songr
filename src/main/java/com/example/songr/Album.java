@@ -11,7 +11,7 @@ public class Album {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     private String title;
     private String artist;
     private double songCount;
@@ -28,6 +28,9 @@ public class Album {
 
     public Album(){
 
+    }
+    public long getId() {
+        return id;
     }
 
     public String getTitle() {
@@ -70,9 +73,7 @@ public class Album {
         this.imageUrl = imageUrl;
     }
 
-    public Long getId() {
-        return id;
-    }
+
 
     @Override
     public String toString() {
