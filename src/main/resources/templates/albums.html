@@ -8,6 +8,16 @@
 <body>
  <h1>Albums</h1>
  <div class="container">
+     <ul th:each="allAlbums : ${albums}">
+         <li th:text="${allAlbums.id}"></li>
+         <li th:text="${allAlbums.title}"></li>
+         <li th:text="${allAlbums.artist}"></li>
+         <li th:text="${allAlbums.songCount}"></li>
+         <li th:text="${allAlbums.length}"></li>
+         <a th:href = "${'/albums/' + allAlbums.id}"><img th:src="${allAlbums.imageUrl}" class="image"></a>
+     </ul>
+ </div>
+ <div class="container">
      <ul th:each="allAlbums : ${allAlbums}">
          <li th:text="${allAlbums.id}"></li>
          <li th:text="${allAlbums.title}"></li>
@@ -17,7 +27,7 @@
          <a th:href = "${'/albums/' + allAlbums.id}"><img th:src="${allAlbums.imageUrl}" class="image"></a>
      </ul>
  </div>
- <form action="/new" method="POST">
+ <form action="/albums" method="POST">
 
      <label for="title">Title</label>
      <input type="text" name="title" id="title" value="0">
@@ -36,6 +46,8 @@
 
      <button type="submit">Add Album </button>
  </form>
+
+
 
 
 </body>

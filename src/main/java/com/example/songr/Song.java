@@ -14,7 +14,8 @@ public class Song {
 
     @ManyToOne
     @JoinColumn(name="album_id")
-     Album album;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    Album album;
 
     public Song() {}
 
