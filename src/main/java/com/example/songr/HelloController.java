@@ -44,7 +44,14 @@ public class HelloController {
         allAlbums.add(thirdOne);
 
         model.addAttribute("allAlbums", allAlbums);
+
+        //>>>>>>>>>>>>add albums<<<<<<<
+
+        model.addAttribute("newAlbum", new Album());
+        Iterable<Album> albums = albumRepository.findAll();
+        model.addAttribute("albums", albums);
         return "albums";
+
     }
 
 //    >>>>>>>>>lab12>>>> >>>>>>>>>>>>>>>>>>
@@ -52,50 +59,35 @@ public class HelloController {
 
 
 
-    @PostMapping("/new")
-    public RedirectView addAlbums(@RequestParam (value = "title" ,required = false, defaultValue = "title")String title,@RequestParam(value="artist") String artist,
-                                  @RequestParam(value="songCount") double songCount,
-                                  @RequestParam(value="length") double length,
-                                  @RequestParam(value="imageUrl") String imageUrl,Model model) {
-        System.out.println(title);
-        System.out.println(artist);
-        System.out.println(songCount);
-        System.out.println(length);
-        System.out.println(imageUrl);
-        Album album = new Album(title, artist, songCount, length, imageUrl);
-        albumRepository.save(album);
-
-        return new RedirectView("/new");
+    @PostMapping("/albums")
+    public String albumSubmit(@ModelAttribute Album addAlbum) {
+//        System.out.println(title);
+//        System.out.println(artist);
+//        System.out.println(songCount);
+//        System.out.println(length);
+//        System.out.println(imageUrl);
+        albumRepository.save(addAlbum);
+        return "redirect:/albums";
     }
-
-    @GetMapping("/new")
-    public String getAlbums(Model model) {
-        Iterable<Album> albumCollection = albumRepository.findAll();
-        model.addAttribute("allAlbums", albumCollection);
-
-        return "new";
-    }
-
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>lab13>error when adding song id error>>>>>>>>>>>>>>>>>>>>>>>>>
 
-    @GetMapping("/albums/{id}")
-    public String getDetailView (@PathVariable long id, Model model) {
-        // note that attributeName "album", the key, has to match the template (so, it matches the object
-        // - ie album.title)
-        model.addAttribute("allAlbums", albumRepository.getById(id));
-        return "details";
-    }
 
-    // >>>>>>>>>>>>>>>>problem with id
+@GetMapping("/albums/{id}")
+public String getAlbumSong(@PathVariable long id, Model model){
+    Album theAlbum =albumRepository.getById(id);
+
+    model.addAttribute("album", theAlbum);
+    model.addAttribute("addSong", new Song());
+    return "details";
+}
+
     @PostMapping("/albums/{id}")
-    public RedirectView addSongs(@RequestParam (value="id") long id,@RequestParam (value = "title")String title, @RequestParam(value="length") double length, @RequestParam(value="trackNumber") double trackNumber) {
-        // find the album in the db
-        Album albumId = albumRepository.getById(id);
-
-        Song newSong = new Song(title, length, trackNumber, albumId);
+    public String songSubmit(@RequestParam String title, @RequestParam long length, short trackNumber, @PathVariable long id){
+        Album album_id =albumRepository.getById(id);
+        Song newSong = new Song(title, length, trackNumber, album_id);
         songRepository.save(newSong);
-        return new RedirectView("/albums/" + id);
+        return "redirect:/albums/{id}";
     }
 
 }
