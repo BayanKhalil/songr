@@ -3,6 +3,7 @@ package com.example.songr;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
@@ -16,6 +17,7 @@ public class HelloController {
     private AlbumRepository albumRepository;
     @Autowired
     private SongRepository songRepository;
+
 
     @GetMapping("/hello")
     public String helloWorld() {
@@ -60,34 +62,42 @@ public class HelloController {
 
 
     @PostMapping("/albums")
-    public String albumSubmit(@ModelAttribute Album addAlbum) {
-//        System.out.println(title);
-//        System.out.println(artist);
-//        System.out.println(songCount);
-//        System.out.println(length);
-//        System.out.println(imageUrl);
+    public RedirectView albumSubmit(@ModelAttribute Album addAlbum) {
+        System.out.println(addAlbum.getTitle());
+        System.out.println(addAlbum.getArtist());
+        System.out.println(addAlbum.getSongCount());
+        System.out.println(addAlbum.getLength());
+        System.out.println(addAlbum.getImageUrl());
         albumRepository.save(addAlbum);
-        return "redirect:/albums";
+        return new RedirectView("/albums");
     }
 
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>lab13>error when adding song id error>>>>>>>>>>>>>>>>>>>>>>>>>
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>lab13>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
-@GetMapping("/albums/{id}")
-public String getAlbumSong(@PathVariable long id, Model model){
-    Album theAlbum =albumRepository.getById(id);
+    @GetMapping("/albums/{id}")
+    public String detailView (@PathVariable long id, Model model) {
+        model.addAttribute("album", albumRepository.getById(id));
+        Iterable<Song> songs = songRepository.findAll();
+        model.addAttribute("addSong", songs);
 
-    model.addAttribute("album", theAlbum);
-    model.addAttribute("addSong", new Song());
-    return "details";
-}
+        return "details";
+    }
+
 
     @PostMapping("/albums/{id}")
-    public String songSubmit(@RequestParam String title, @RequestParam long length, short trackNumber, @PathVariable long id){
-        Album album_id =albumRepository.getById(id);
-        Song newSong = new Song(title, length, trackNumber, album_id);
+    public RedirectView addSongs(@PathVariable long id, String title, double length, double trackNumber) {
+
+        Album albumId = albumRepository.getById(id);
+
+        Song newSong = new Song(title, length, trackNumber, albumId);
+        albumId.setLength(albumId.getLength()+length);
+        albumId.setSongCount(albumId.getSongCount() + 1);
+        albumRepository.save(albumId);
+
         songRepository.save(newSong);
-        return "redirect:/albums/{id}";
+        return new RedirectView("/albums/" + id);
     }
+
 
 }
