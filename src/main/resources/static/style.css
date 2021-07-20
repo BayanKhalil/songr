@@ -10,7 +10,6 @@ p{
 margin-top:30%;
     text-align: center;
 color:blue
-
 }
 .container {
   display: flex;
@@ -18,4 +17,27 @@ color:blue
 }
 .image{
 width:50%;
+}
+
+#splash{
+ background-image: url("https://m.media-amazon.com/images/G/01/AmazonMusic/2021/Marketing/HDFREE_DMUX-4675/Landing_Page/US-EN_051121_HD4A_ACQ_LP_D_Slot02_1x_CV1._CB668001557_.jpg");
+
+width:100%;
+height:100%;
+
+
+
+}
+
+header a{
+padding-inline:12%;
+text-decoration: none;
+    color: white;
+    font-size: 25px;
+
+}
+
+#big{
+ font-size: 30%;
+
 }
